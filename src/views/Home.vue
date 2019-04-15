@@ -1,10 +1,9 @@
 <template>
-  <div id="flashcard-app" class="container">
-    <h1>Quiz App</h1>
-    <Form/>
-    <QuizCard/>
-
-    <FlashCard/>
+  <div class="container home">
+    <header class="home__header">
+      <h1>Futurama Quiz</h1>
+    </header>
+    <button id="btn__start" class="btn">Start Quiz</button>
   </div>
 </template>
 
@@ -17,24 +16,16 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "home",
   components: {
-    QuizCard,
-    Form,
-    FlashCard
+    QuestionCard,
+    QuestionCardCorrect,
+    QuestionCardWrong,
+    ScoreCard
   },
-  data: function() {
-    return {
-      message: "QuizApp",
-      newFront: "",
-      newBack: "",
-      error: false
-    };
+  mounted() {
+    this.$store.dispatch("loadQuestions");
   },
   computed: {
-    ...mapState(["cards"]),
-    ...mapGetters([])
-  },
-  methods: {
-    ...mapActions(["addCard"])
+    ...mapState(["questions"])
   }
 };
 </script>
