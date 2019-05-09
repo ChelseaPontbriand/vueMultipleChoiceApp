@@ -3,14 +3,29 @@
     <header class="home__header">
       <h1>Futurama Quiz</h1>
     </header>
-    <button id="btn__start" class="btn">Start Quiz</button>
+    <div class="body" v-if="this.hasQuestions">
+      <div
+        class="question hide"
+        v-for="(question, index) in Questions"
+        :key="index"
+      >{{ question.question }}</div>
+      <!-- maybe use v-show instead of hide class -->
+      <button class="btn startBtn" v-on:click="startQuiz('Hello')">Start Quiz</button>
+      <button class="btn endBtn hide">End Quiz</button>
+    </div>
+
+    <div class="body" v-else>
+      <h2>Loading Questions...</h2>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Form from "@/components/Form";
-import FlashCard from "@/components/FlashCard";
+import QuestionCard from "@/components/QuestionCard";
+import QuestionCardCorrect from "@/components/QuestionCardCorrect";
+import QuestionCardWrong from "@/components/QuestionCardWrong";
+import ScoreCard from "@/components/ScoreCard";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
@@ -21,37 +36,25 @@ export default {
     QuestionCardWrong,
     ScoreCard
   },
-  mounted() {
-    this.$store.dispatch("loadQuestions");
+  created() {
+    if (!this.hasQuestions) {
+      this.$store.dispatch("loadQuestions");
+    }
+  },
+  methods: {
+    ...mapActions(["startQuiz"])
   },
   computed: {
-    ...mapState(["questions"])
+    ...mapState(["Questions"]),
+    ...mapGetters(["hasQuestions"])
   }
 };
 </script>
 
 
 <style lang="scss">
-body {
-  font-family: "Montserrat", sans-serif;
-  text-align: center;
-}
-
-ul {
-  padding-left: 0;
-  display: flex;
-  flex-flow: row wrap;
-}
-
-li {
-  list-style-type: none;
-  padding: 10px 10px;
-  transition: all 0.3s ease;
-}
-
-.container {
-  max-width: 100%;
-  padding: 2em;
+.hide {
+  display: none;
 }
 </style>
 

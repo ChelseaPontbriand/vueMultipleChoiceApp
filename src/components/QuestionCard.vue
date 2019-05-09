@@ -36,11 +36,7 @@
 <script>
 export default {
   name: "QuestionCard",
-  components: {
-    QuizCard,
-    Form,
-    FlashCard
-  },
+  components: {},
   methods: {}
 };
 </script>
