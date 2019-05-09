@@ -12,21 +12,11 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import QuestionCard from "@/components/QuestionCard";
-import QuestionCardCorrect from "@/components/QuestionCardCorrect";
-import QuestionCardWrong from "@/components/QuestionCardWrong";
-import ScoreCard from "@/components/ScoreCard";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "home",
-  components: {
-    QuestionCard,
-    QuestionCardCorrect,
-    QuestionCardWrong,
-    ScoreCard
-  },
+  components: {},
   created() {
     if (!this.hasQuestions) {
       this.$store.dispatch("loadQuestions");
