@@ -4,19 +4,10 @@
       <h1>Futurama Quiz</h1>
     </header>
     <div class="body" v-if="this.hasQuestions">
-      <div
-        class="question hide"
-        v-for="(question, index) in Questions"
-        :key="index"
-      >{{ question.question }}</div>
-      <!-- maybe use v-show instead of hide class -->
-      <button class="btn startBtn" v-on:click="startQuiz('Hello')">Start Quiz</button>
-      <button class="btn endBtn hide">End Quiz</button>
+      <button v-if="phase == 'ALL_LOADED'" class="btn -start" @click="startQuiz('Hello')">Start Quiz</button>
+      <button v-if="phase == 'GAME_STARTED'" class="btn -end" @click="endQuiz('Bye')">End Quiz</button>
     </div>
-
-    <div class="body" v-else>
-      <h2>Loading Questions...</h2>
-    </div>
+    <h2 v-else>Loading Questions...</h2>
   </div>
 </template>
 
@@ -41,12 +32,12 @@ export default {
       this.$store.dispatch("loadQuestions");
     }
   },
-  methods: {
-    ...mapActions(["startQuiz"])
-  },
   computed: {
-    ...mapState(["Questions"]),
+    ...mapState(["questions", "phase"]),
     ...mapGetters(["hasQuestions"])
+  },
+  methods: {
+    ...mapActions(["startQuiz", "endQuiz"])
   }
 };
 </script>
